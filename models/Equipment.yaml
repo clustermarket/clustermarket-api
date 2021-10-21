@@ -1,0 +1,88 @@
+description: Represent an asset under the control of a lab
+type: object
+x-examples:
+  example-1:
+    id: 492
+    name: Liquid Reflector
+    category: ''
+    manufacturer: Manufacturer
+    model_number: '0001'
+    city: Welchmouth
+    charging_type: Per Hour
+    currency: USD
+    country: BQ
+    room: Room 101
+    lab:
+      id: 103
+      name: Materials Science Lab
+    description: wowsa
+examples:
+  - id: 0
+    name: string
+    category: string
+    manufacturer: string
+    model_number: string
+    city: string
+    charging_type: string
+    currency: string
+    country: string
+    room: string
+    lab:
+      id: 0
+      name: string
+    description: string
+title: Equipment
+properties:
+  id:
+    type: number
+    description: Equipment ID
+    readOnly: true
+  name:
+    type: string
+    minLength: 1
+    description: Equipment name
+  category:
+    type: string
+  manufacturer:
+    type: string
+    minLength: 1
+    description: Equipment Manufacturer Name
+  model:
+    type: string
+    minLength: 1
+    description: Equipment model name
+  charging_type:
+    type: string
+    minLength: 1
+  currency:
+    type: string
+    minLength: 1
+  room:
+    type: string
+    minLength: 1
+  lab:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: number
+        description: Account ID
+      name:
+        type: string
+        minLength: 1
+        description: Laboratory name
+  description:
+    type: string
+    minLength: 1
+    description: Equipment description
+required:
+  - id
+  - name
+  - manufacturer
+  - model
+  - charging_type
+  - currency
+  - lab
+  - description

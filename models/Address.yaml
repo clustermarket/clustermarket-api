@@ -1,0 +1,23 @@
+title: Address
+type: object
+properties:
+  id:
+    type: integer
+  street:
+    type: string
+    description: Street level address
+  city:
+    type: string
+    description: 'Settlement name ex: town, city.'
+  postal_code:
+    type: string
+    description: Postal code in local format
+  country:
+    type: string
+    description: ' ISO 3166 Alpha 3 code'
+required:
+  - id
+  - street
+  - city
+  - postal_code
+  - country

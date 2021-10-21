@@ -1,0 +1,43 @@
+title: Account
+type: object
+description: 'Represents an organisation, department or lab.'
+properties:
+  id:
+    type: string
+    readOnly: true
+  account_type:
+    type: string
+    enum:
+      - organisation
+      - department
+      - lab
+    default: lab
+    example: lab
+  sector:
+    type: string
+    enum:
+      - academia
+      - industry
+  department_id:
+    $ref: ./Account.yaml
+  organisation_id:
+    $ref: ./Account.yaml
+  name:
+    type: string
+    example: Cambridge Graphene Center
+  description:
+    type: string
+  website:
+    type: string
+    maxLength: 200
+    example: 'https://www.graphene.cam.ac.uk/'
+  currency:
+    type: string
+    description: ISO 4217 3-letter currency code
+  timezone:
+    type: string
+    example: Europe/London
+required:
+  - id
+  - name
+  - account_type

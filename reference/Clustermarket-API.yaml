@@ -1,0 +1,421 @@
+openapi: 3.1.0
+info:
+  title: Clustermarket API
+  version: '0.1'
+  summary: The external API for Clustermarket.
+  description: |-
+    # Important Concepts
+
+    ## Account
+
+    An account in Clustermarket represents an organisation, department or a lab. We have a hierarchical strucure following these rules:
+    * An organisation can have many departments and many labs.
+    * A department may only have labs.
+    * A lab can exist by itself, without a department or an organisation. We refer to these as independent labs.
+
+    ```mermaid
+    graph TD
+        org[Organisation]
+        dep1[Department]
+        dep2[Department]
+        org-->dep1
+        dep1-->lab1[Lab]
+        dep1-->lab2[Lab]
+        org-->dep2
+        dep2-->lab3[Lab]
+        il[Independent Lab]
+    ```
+  termsOfService: 'https://www.clustermarket.com/terms'
+  contact:
+    name: Support
+    email: support@clustermarket.com
+servers:
+  - url: 'http://api.clustermarket.com/v1'
+paths:
+  '/bookings/{id}':
+    get:
+      summary: Show Booking
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    id: 6377
+                    add_ons: Safety induction
+                    requester_organisation:
+                      id: 38343
+                      name: Lakeacre University
+                    provider_organisation:
+                      id: 38343
+                      name: Lakeacre University
+                    requester:
+                      id: 26707
+                      email: johnathon.hand@domain.com
+                      sector: industry
+                      name: Johnathon Hand
+                    status: Requested
+                    duration: 120
+                    equipment:
+                      id: 7572
+                      name: Subatomic NMR Spectrometer
+                      room: Room 101
+                    cost: '0.0'
+                    requester_lab:
+                      id: 38344
+                      name: Materials Science Lab
+                    provider_lab:
+                      id: 38344
+                      name: Materials Science Lab
+                    requester_group:
+                      name: 'Architectural Technology #1 Research Group'
+                    requested_at: '2021-10-21T15:49:11.622Z'
+                    booking_type: internal
+                properties:
+                  id:
+                    type: number
+                  add_ons:
+                    type: string
+                    minLength: 1
+                  requester_organisation:
+                    type: object
+                    required:
+                      - id
+                      - name
+                    properties:
+                      id:
+                        $ref: ../models/Account.yaml
+                      name:
+                        type: string
+                        minLength: 1
+                  provider_organisation:
+                    type: object
+                    required:
+                      - id
+                      - name
+                    properties:
+                      id:
+                        $ref: ../models/Account.yaml
+                      name:
+                        type: string
+                        minLength: 1
+                  requester:
+                    type: object
+                    required:
+                      - id
+                      - email
+                      - sector
+                      - name
+                    properties:
+                      id:
+                        type: number
+                      email:
+                        type: string
+                        minLength: 1
+                      sector:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                  status:
+                    type: string
+                    minLength: 1
+                  duration:
+                    type: number
+                  equipment:
+                    type: object
+                    required:
+                      - id
+                      - name
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      room:
+                        type: string
+                        minLength: 1
+                  cost:
+                    type: string
+                    minLength: 1
+                  requester_lab:
+                    type: object
+                    required:
+                      - id
+                      - name
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                  provider_lab:
+                    type: object
+                    required:
+                      - id
+                      - name
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                  requester_group:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                  requested_at:
+                    type: string
+                    minLength: 1
+                  booking_type:
+                    type: string
+                    minLength: 1
+                required:
+                  - id
+                  - requester_organisation
+                  - provider_organisation
+                  - requester
+                  - status
+                  - duration
+                  - equipment
+                  - cost
+                  - requester_lab
+                  - provider_lab
+                  - requested_at
+                  - booking_type
+              examples: {}
+        '403':
+          description: Forbidden
+      operationId: get-asset_requests
+      description: Return the details about a particular booking as defined by the database identifier. The application scope must include 'read_bookings'.
+    parameters:
+      - schema:
+          type: number
+        name: id
+        in: path
+        required: true
+        description: Numeric database identifier
+  /bookings:
+    get:
+      summary: List Bookings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                x-examples:
+                  example-1:
+                    - id: 6373
+                      asset_id: 7568
+                    - id: 6374
+                      asset_id: 7569
+                    - id: 6375
+                      asset_id: 7570
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    equipment_id:
+                      type: number
+                  required:
+                    - id
+                    - equipment_id
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      asset_id: 100
+        '403':
+          description: Forbidden
+      operationId: get-asset_requests
+      description: 'Return lists of bookings accessible to the user, optionally scopable to the providing lab account. The application scope must include ''read_bookings''.'
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: provider_account
+          description: The parent lab account ID.
+    parameters: []
+  /equipment:
+    get:
+      summary: List Equipment
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - name
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - id: 7576
+                      name: Subatomic NMR Spectrometer
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: NMR
+        '403':
+          description: Forbidden
+      operationId: get-assets
+      description: Lists all equipment under the specified lab.
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: account
+          description: The target lab account ID
+    parameters: []
+  '/equipment/{id}':
+    get:
+      summary: Show Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    id: 7575
+                    name: Subatomic NMR Spectrometer
+                    category: null
+                    manufacturer: Manufacturer
+                    model_number: '0001'
+                    city: Port Shonda
+                    charging_type: Per Hour
+                    currency: USD
+                    country: IM
+                    room: Room 101
+                    lab:
+                      id: 38356
+                      name: Materials Science Lab
+                    description: Equipment Description
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                    minLength: 1
+                  category:
+                    type: string
+                  manufacturer:
+                    type: string
+                    minLength: 1
+                  model_number:
+                    type: string
+                    minLength: 1
+                  city:
+                    type: string
+                    minLength: 1
+                  charging_type:
+                    type: string
+                    minLength: 1
+                  currency:
+                    type: string
+                    minLength: 1
+                  country:
+                    type: string
+                    minLength: 1
+                  room:
+                    type: string
+                    minLength: 1
+                  lab:
+                    type: object
+                    required:
+                      - id
+                      - name
+                    properties:
+                      id:
+                        $ref: ../models/Account.yaml
+                      name:
+                        type: string
+                        minLength: 1
+                  description:
+                    type: string
+                    minLength: 1
+                required:
+                  - id
+                  - name
+                  - manufacturer
+                  - model_number
+                  - city
+                  - charging_type
+                  - currency
+                  - country
+                  - lab
+                  - description
+        '403':
+          description: Forbidden
+      operationId: 'get-assets-:id'
+      description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include ''read_equipment''.'
+    parameters:
+      - schema:
+          type: number
+        name: id
+        in: path
+        required: true
+        description: The database numeric identifier for the asset.
+components:
+  schemas: {}
+  securitySchemes:
+    API Key:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'http://app.clustermarket.com/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code'
+          tokenUrl: 'http://app.clustermarket.com/oauth/token'
+          refreshUrl: ''
+          scopes:
+            read_bookings: Fetch single bookings by ID or lists of bookings scoped to a user or accout
+            read_equipment: Fetch equipment by ID or as a list scoped to a user or account
+  responses:
+    '403':
+      description: Example response
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+        application/xml:
+          schema:
+            type: object
+            properties: {}
+      headers: {}
+security:
+  - API Key:
+      - read_bookings
+      - read_equipment
