@@ -420,5 +420,5 @@ components:
       headers: {}
 security:
   - API Key:
-      - read_bookings
       - read_equipment
+      - read_bookings
