@@ -401,8 +401,8 @@ components:
           scopes:
             read_equipment: Read Access to Equipment
             read_bookings: Read Access to Bookings
-          authorizationUrl: /oauth/authorize
-          tokenUrl: /oauth/token
+          authorizationUrl: 'https://app.clustermarket.com/oauth/authorize'
+          tokenUrl: 'https://app.clustermarket.com/oauth/token'
       description: ''
   responses:
     '403':
