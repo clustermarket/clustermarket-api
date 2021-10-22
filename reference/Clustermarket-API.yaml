@@ -32,8 +32,6 @@ info:
 servers:
   - url: 'https://api.clustermarket.com/v1'
     description: Production
-  - url: 'https://api.staging.clustermarket.com/v1'
-    description: Staging
 paths:
   '/bookings/{id}':
     get:
