@@ -35,7 +35,7 @@ servers:
 paths:
   '/bookings/{id}':
     get:
-      summary: Show Booking
+      summary: Booking
       tags: []
       responses:
         '200':
@@ -204,7 +204,7 @@ paths:
         name: id
         in: path
         required: true
-        description: Numeric database identifier
+        description: Booking ID
   /bookings:
     get:
       summary: List Bookings
@@ -299,7 +299,7 @@ paths:
     parameters: []
   '/equipment/{id}':
     get:
-      summary: Show Equipment
+      summary: Equipment
       responses:
         '200':
           description: OK
@@ -388,7 +388,26 @@ paths:
         name: id
         in: path
         required: true
-        description: The database numeric identifier for the asset.
+        description: Equipment ID
+  '/accounts/{id}':
+    parameters:
+      - schema:
+          type: number
+        name: id
+        in: path
+        required: true
+        description: Account ID
+    get:
+      summary: Account
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Account.yaml
+      operationId: get-accounts-id
 components:
   schemas: {}
   securitySchemes:
