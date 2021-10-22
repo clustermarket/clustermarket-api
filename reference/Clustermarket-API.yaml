@@ -30,9 +30,9 @@ info:
     name: Support
     email: support@clustermarket.com
 servers:
-  - url: 'http://api.clustermarket.com/v1'
+  - url: 'https://api.clustermarket.com/v1'
     description: Production
-  - url: 'http://api.staging.clustermarket.com/v1'
+  - url: 'https://api.staging.clustermarket.com/v1'
     description: Staging
 paths:
   '/bookings/{id}':
