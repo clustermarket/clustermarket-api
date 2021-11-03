@@ -34,7 +34,7 @@ examples:
 title: Equipment
 properties:
   id:
-    type: number
+    type: integer
     description: Equipment ID
     readOnly: true
   name:
@@ -67,7 +67,7 @@ properties:
       - name
     properties:
       id:
-        type: number
+        type: integer
         description: Account ID
       name:
         type: string

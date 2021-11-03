@@ -21,3 +21,4 @@ required:
   - city
   - postal_code
   - country
+description: Represents an address.

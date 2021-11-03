@@ -3,7 +3,7 @@ type: object
 description: 'Represents an organisation, department or lab.'
 properties:
   id:
-    type: string
+    type: integer
     readOnly: true
   account_type:
     type: string
@@ -39,5 +39,5 @@ properties:
     example: Europe/London
 required:
   - id
-  - name
   - account_type
+  - name

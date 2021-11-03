@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Clustermarket API
-  version: '0.1'
+  version: 0.1.1
   summary: The external API for Clustermarket.
   description: |-
     # Important Concepts
@@ -29,182 +29,15 @@ info:
   contact:
     name: Support
     email: support@clustermarket.com
+  license:
+    name: Proprietary
+    url: 'https://www.clustermarket.com/terms'
 servers:
   - url: 'https://api.clustermarket.com/v1'
     description: Production
+  - url: 'https://api.staging.clustermarket.com/v1'
+    description: Staging
 paths:
-  '/bookings/{id}':
-    get:
-      summary: Booking
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    id: 6377
-                    add_ons: Safety induction
-                    requester_organisation:
-                      id: 38343
-                      name: Lakeacre University
-                    provider_organisation:
-                      id: 38343
-                      name: Lakeacre University
-                    requester:
-                      id: 26707
-                      email: johnathon.hand@domain.com
-                      sector: industry
-                      name: Johnathon Hand
-                    status: Requested
-                    duration: 120
-                    equipment:
-                      id: 7572
-                      name: Subatomic NMR Spectrometer
-                      room: Room 101
-                    cost: '0.0'
-                    requester_lab:
-                      id: 38344
-                      name: Materials Science Lab
-                    provider_lab:
-                      id: 38344
-                      name: Materials Science Lab
-                    requester_group:
-                      name: 'Architectural Technology #1 Research Group'
-                    requested_at: '2021-10-21T15:49:11.622Z'
-                    booking_type: internal
-                properties:
-                  id:
-                    type: number
-                  add_ons:
-                    type: string
-                    minLength: 1
-                  requester_organisation:
-                    type: object
-                    required:
-                      - id
-                      - name
-                    properties:
-                      id:
-                        $ref: ../models/Account.yaml
-                      name:
-                        type: string
-                        minLength: 1
-                  provider_organisation:
-                    type: object
-                    required:
-                      - id
-                      - name
-                    properties:
-                      id:
-                        $ref: ../models/Account.yaml
-                      name:
-                        type: string
-                        minLength: 1
-                  requester:
-                    type: object
-                    required:
-                      - id
-                      - email
-                      - sector
-                      - name
-                    properties:
-                      id:
-                        type: number
-                      email:
-                        type: string
-                        minLength: 1
-                      sector:
-                        type: string
-                        minLength: 1
-                      name:
-                        type: string
-                        minLength: 1
-                  status:
-                    type: string
-                    minLength: 1
-                  duration:
-                    type: number
-                  equipment:
-                    type: object
-                    required:
-                      - id
-                      - name
-                    properties:
-                      id:
-                        type: number
-                      name:
-                        type: string
-                        minLength: 1
-                      room:
-                        type: string
-                        minLength: 1
-                  cost:
-                    type: string
-                    minLength: 1
-                  requester_lab:
-                    type: object
-                    required:
-                      - id
-                      - name
-                    properties:
-                      id:
-                        type: number
-                      name:
-                        type: string
-                        minLength: 1
-                  provider_lab:
-                    type: object
-                    required:
-                      - id
-                      - name
-                    properties:
-                      id:
-                        type: number
-                      name:
-                        type: string
-                        minLength: 1
-                  requester_group:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        minLength: 1
-                  requested_at:
-                    type: string
-                    minLength: 1
-                  booking_type:
-                    type: string
-                    minLength: 1
-                required:
-                  - id
-                  - requester_organisation
-                  - provider_organisation
-                  - requester
-                  - status
-                  - duration
-                  - equipment
-                  - cost
-                  - requester_lab
-                  - provider_lab
-                  - requested_at
-                  - booking_type
-              examples: {}
-        '403':
-          description: Forbidden
-      operationId: get-asset_requests
-      description: Return the details about a particular booking as defined by the database identifier. The application scope must include 'read_bookings'.
-    parameters:
-      - schema:
-          type: number
-        name: id
-        in: path
-        required: true
-        description: Booking ID
   /bookings:
     get:
       summary: List Bookings
@@ -230,9 +63,9 @@ paths:
                   type: object
                   properties:
                     id:
-                      type: number
+                      type: integer
                     equipment_id:
-                      type: number
+                      type: integer
                   required:
                     - id
                     - equipment_id
@@ -240,10 +73,10 @@ paths:
                 example-1:
                   value:
                     - id: 1
-                      asset_id: 100
+                      equipment_id: 100
         '403':
           description: Forbidden
-      operationId: get-asset_requests
+      operationId: get-bookings
       description: 'Return lists of bookings accessible to the user, optionally scopable to the providing lab account. The application scope must include ''read_bookings''.'
       parameters:
         - schema:
@@ -252,6 +85,29 @@ paths:
           name: provider_account
           description: The parent lab account ID.
     parameters: []
+  '/bookings/{id}':
+    get:
+      summary: Booking
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Booking.yaml
+              examples: {}
+        '403':
+          description: Forbidden
+      operationId: 'get-bookings-:id'
+      description: Return the details about a particular booking as defined by the database identifier. The application scope must include `read_bookings`.
+    parameters:
+      - schema:
+          type: number
+        name: id
+        in: path
+        required: true
+        description: Booking ID
   /equipment:
     get:
       summary: List Equipment
@@ -266,21 +122,21 @@ paths:
                 description: ''
                 minItems: 1
                 uniqueItems: true
-                items:
-                  type: object
-                  required:
-                    - id
-                    - name
-                  properties:
-                    id:
-                      type: number
-                    name:
-                      type: string
-                      minLength: 1
                 x-examples:
                   example-1:
                     - id: 7576
                       name: Subatomic NMR Spectrometer
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      minLength: 1
+                  required:
+                    - id
+                    - name
               examples:
                 example-1:
                   value:
@@ -288,7 +144,7 @@ paths:
                       name: NMR
         '403':
           description: Forbidden
-      operationId: get-assets
+      operationId: get-equipment
       description: Lists all equipment under the specified lab.
       parameters:
         - schema:
@@ -306,82 +162,11 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    id: 7575
-                    name: Subatomic NMR Spectrometer
-                    category: null
-                    manufacturer: Manufacturer
-                    model_number: '0001'
-                    city: Port Shonda
-                    charging_type: Per Hour
-                    currency: USD
-                    country: IM
-                    room: Room 101
-                    lab:
-                      id: 38356
-                      name: Materials Science Lab
-                    description: Equipment Description
-                properties:
-                  id:
-                    type: number
-                  name:
-                    type: string
-                    minLength: 1
-                  category:
-                    type: string
-                  manufacturer:
-                    type: string
-                    minLength: 1
-                  model_number:
-                    type: string
-                    minLength: 1
-                  city:
-                    type: string
-                    minLength: 1
-                  charging_type:
-                    type: string
-                    minLength: 1
-                  currency:
-                    type: string
-                    minLength: 1
-                  country:
-                    type: string
-                    minLength: 1
-                  room:
-                    type: string
-                    minLength: 1
-                  lab:
-                    type: object
-                    required:
-                      - id
-                      - name
-                    properties:
-                      id:
-                        $ref: ../models/Account.yaml
-                      name:
-                        type: string
-                        minLength: 1
-                  description:
-                    type: string
-                    minLength: 1
-                required:
-                  - id
-                  - name
-                  - manufacturer
-                  - model_number
-                  - city
-                  - charging_type
-                  - currency
-                  - country
-                  - lab
-                  - description
+                $ref: ../models/Equipment.yaml
         '403':
           description: Forbidden
-      operationId: 'get-assets-:id'
-      description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include ''read_equipment''.'
+      operationId: 'get-equipment-:id'
+      description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
     parameters:
       - schema:
           type: number
@@ -389,6 +174,27 @@ paths:
         in: path
         required: true
         description: Equipment ID
+  /accounts:
+    parameters: []
+    get:
+      summary: Account
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+      operationId: get-accounts
+      description: Lists all accounts accessilbe through the integration.
   '/accounts/{id}':
     parameters:
       - schema:
@@ -407,11 +213,12 @@ paths:
             application/json:
               schema:
                 $ref: ../models/Account.yaml
-      operationId: get-accounts-id
+      operationId: 'get-accounts-:id'
+      description: Get the full details of a specific account.
 components:
   schemas: {}
   securitySchemes:
-    API Key:
+    APIKey-production:
       type: oauth2
       flows:
         authorizationCode:
@@ -421,20 +228,17 @@ components:
           authorizationUrl: 'https://app.clustermarket.com/oauth/authorize'
           tokenUrl: 'https://app.clustermarket.com/oauth/token'
       description: ''
-  responses:
-    '403':
-      description: Example response
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
-        application/xml:
-          schema:
-            type: object
-            properties: {}
-      headers: {}
+    APIKey-staging:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://staging.clustermarket.com/oauth/authorize'
+          tokenUrl: 'https://staging.clustermarket.com/oauth/token'
+          scopes:
+            read_equipment: Read Access to Equipment
+            read_bookings: Read Access to Bookings
+      description: ''
+  responses: {}
 security:
   - API Key:
       - read_equipment
