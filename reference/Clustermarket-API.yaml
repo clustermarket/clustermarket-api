@@ -87,7 +87,7 @@ paths:
     parameters: []
   '/bookings/{id}':
     get:
-      summary: Booking
+      summary: Booking Details
       tags: []
       responses:
         '200':
@@ -155,7 +155,7 @@ paths:
     parameters: []
   '/equipment/{id}':
     get:
-      summary: Equipment
+      summary: Equipment Details
       responses:
         '200':
           description: OK
@@ -177,7 +177,7 @@ paths:
   /accounts:
     parameters: []
     get:
-      summary: Account
+      summary: List Account
       tags: []
       responses:
         '200':
@@ -204,7 +204,7 @@ paths:
         required: true
         description: Account ID
     get:
-      summary: Account
+      summary: Account Details
       tags: []
       responses:
         '200':
