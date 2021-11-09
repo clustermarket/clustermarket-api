@@ -18,9 +18,9 @@ properties:
     enum:
       - academia
       - industry
-  department_id:
+  department:
     $ref: ./Account.yaml
-  organisation_id:
+  organisation:
     $ref: ./Account.yaml
   name:
     type: string
@@ -31,9 +31,6 @@ properties:
     type: string
     maxLength: 200
     example: 'https://www.graphene.cam.ac.uk/'
-  currency:
-    type: string
-    description: ISO 4217 3-letter currency code
   timezone:
     type: string
     example: Europe/London
