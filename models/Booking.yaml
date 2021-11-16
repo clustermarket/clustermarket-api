@@ -62,9 +62,6 @@ properties:
       name:
         type: string
         minLength: 1
-      room:
-        type: string
-        minLength: 1
   cost:
     type: string
     minLength: 1
