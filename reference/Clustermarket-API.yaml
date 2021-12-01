@@ -177,7 +177,7 @@ paths:
   /accounts:
     parameters: []
     get:
-      summary: List Account
+      summary: List Accounts
       tags: []
       responses:
         '200':
