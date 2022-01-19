@@ -84,11 +84,14 @@ paths:
           in: query
           name: provider_account
           description: The parent lab account ID.
+      tags:
+        - bookings
     parameters: []
   '/bookings/{id}':
     get:
       summary: Booking Details
-      tags: []
+      tags:
+        - bookings
       responses:
         '200':
           description: OK
@@ -111,7 +114,8 @@ paths:
   /equipment:
     get:
       summary: List Equipment
-      tags: []
+      tags:
+        - equipment
       responses:
         '200':
           description: OK
@@ -167,6 +171,8 @@ paths:
           description: Forbidden
       operationId: 'get-equipment-:id'
       description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
+      tags:
+        - equipment
     parameters:
       - schema:
           type: number
@@ -178,7 +184,8 @@ paths:
     parameters: []
     get:
       summary: List Accounts
-      tags: []
+      tags:
+        - accounts
       responses:
         '200':
           description: OK
@@ -205,7 +212,8 @@ paths:
         description: Account ID
     get:
       summary: Account Details
-      tags: []
+      tags:
+        - accounts
       responses:
         '200':
           description: OK
@@ -243,3 +251,7 @@ security:
   - API Key:
       - read_equipment
       - read_bookings
+tags:
+  - name: accounts
+  - name: bookings
+  - name: equipment
