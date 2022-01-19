@@ -293,7 +293,6 @@ components:
     Booking:
       title: Booking
       type: object
-      examples: {}
       description: Equipment bookings
       properties:
         id:
@@ -426,21 +425,6 @@ components:
             id: 103
             name: Materials Science Lab
           description: wowsa
-      examples:
-        - id: 0
-          name: string
-          category: string
-          manufacturer: string
-          model_number: string
-          city: string
-          charging_type: string
-          currency: string
-          country: string
-          room: string
-          lab:
-            id: 0
-            name: string
-          description: string
       title: Equipment
       properties:
         id:
