@@ -2,7 +2,6 @@ openapi: 3.0.0
 info:
   title: Clustermarket API
   version: 0.1.1
-  summary: The external API for Clustermarket.
   description: |-
     # Important Concepts
 
@@ -98,7 +97,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../models/Booking.yaml
+                $ref: '#/components/schemas/Booking'
               examples: {}
         '403':
           description: Forbidden
@@ -166,7 +165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../models/Equipment.yaml
+                $ref: '#/components/schemas/Equipment'
         '403':
           description: Forbidden
       operationId: 'get-equipment-:id'
@@ -220,11 +219,283 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../models/Account.yaml
+                $ref: '#/components/schemas/Account'
       operationId: 'get-accounts-:id'
       description: Get the full details of a specific account.
 components:
-  schemas: {}
+  schemas:
+    Account:
+      title: Account
+      type: object
+      description: 'Represents an organisation, department or lab.'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account_type:
+          type: string
+          enum:
+            - organisation
+            - department
+            - lab
+          default: lab
+          example: lab
+        sector:
+          type: string
+          enum:
+            - academia
+            - industry
+        department:
+          $ref: '#/components/schemas/Account'
+        organisation:
+          $ref: '#/components/schemas/Account'
+        name:
+          type: string
+          example: Cambridge Graphene Center
+        description:
+          type: string
+        website:
+          type: string
+          maxLength: 200
+          example: 'https://www.graphene.cam.ac.uk/'
+        timezone:
+          type: string
+          example: Europe/London
+      required:
+        - id
+        - account_type
+        - name
+    Address:
+      title: Address
+      type: object
+      properties:
+        id:
+          type: integer
+        street:
+          type: string
+          description: Street level address
+        city:
+          type: string
+          description: 'Settlement name ex: town, city.'
+        postal_code:
+          type: string
+          description: Postal code in local format
+        country:
+          type: string
+          description: ' ISO 3166 Alpha 3 code'
+      required:
+        - id
+        - street
+        - city
+        - postal_code
+        - country
+      description: Represents an address.
+    Booking:
+      title: Booking
+      type: object
+      examples: {}
+      description: Equipment bookings
+      properties:
+        id:
+          type: integer
+        add_ons:
+          type: string
+          minLength: 1
+        requester_organisation:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
+        provider_organisation:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
+        requester:
+          type: object
+          description: User who requested/made the booking.
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: User ID
+            name:
+              type: string
+              minLength: 1
+              description: 'User''s full name '
+        status:
+          type: string
+          minLength: 1
+        duration:
+          type: number
+        equipment:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              minLength: 1
+        cost:
+          type: string
+          minLength: 1
+        requester_lab:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
+        provider_lab:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
+        requester_group:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+        requested_at:
+          type: string
+          minLength: 1
+        booking_type:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - requester_organisation
+        - provider_organisation
+        - requester
+        - status
+        - duration
+        - equipment
+        - cost
+        - requester_lab
+        - provider_lab
+        - requested_at
+        - booking_type
+    Equipment:
+      description: Represent an asset under the control of a lab
+      type: object
+      x-examples:
+        example-1:
+          id: 492
+          name: Liquid Reflector
+          category: ''
+          manufacturer: Manufacturer
+          model_number: '0001'
+          city: Welchmouth
+          charging_type: Per Hour
+          currency: USD
+          country: BQ
+          room: Room 101
+          lab:
+            id: 103
+            name: Materials Science Lab
+          description: wowsa
+      examples:
+        - id: 0
+          name: string
+          category: string
+          manufacturer: string
+          model_number: string
+          city: string
+          charging_type: string
+          currency: string
+          country: string
+          room: string
+          lab:
+            id: 0
+            name: string
+          description: string
+      title: Equipment
+      properties:
+        id:
+          type: integer
+          description: Equipment ID
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+          description: Equipment name
+        category:
+          type: string
+        manufacturer:
+          type: string
+          minLength: 1
+          description: Equipment Manufacturer Name
+        model:
+          type: string
+          minLength: 1
+          description: Equipment model name
+        charging_type:
+          type: string
+          minLength: 1
+        currency:
+          type: string
+          minLength: 1
+        room:
+          type: string
+          minLength: 1
+        lab:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
+              description: Laboratory name
+        description:
+          type: string
+          minLength: 1
+          description: Equipment description
+      required:
+        - id
+        - name
+        - manufacturer
+        - model
+        - charging_type
+        - currency
+        - lab
+        - description
   securitySchemes:
     APIKey-production:
       type: oauth2
