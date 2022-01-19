@@ -246,9 +246,9 @@ components:
             - academia
             - industry
         department:
-          $ref: '#/components/schemas/Account'
+          type: integer
         organisation:
-          $ref: '#/components/schemas/Account'
+          type: integer
         name:
           type: string
           example: Cambridge Graphene Center
