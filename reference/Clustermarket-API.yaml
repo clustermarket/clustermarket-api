@@ -59,7 +59,7 @@ paths:
                 type: array
                 description: ''
                 minItems: 1
-                uniqueItems: true
+                uniqueItems: false
                 x-examples:
                   example-1:
                     - id: 6373
@@ -124,7 +124,7 @@ paths:
                 type: array
                 description: ''
                 minItems: 1
-                uniqueItems: true
+                uniqueItems: false
                 x-examples:
                   example-1:
                     - id: 7576
