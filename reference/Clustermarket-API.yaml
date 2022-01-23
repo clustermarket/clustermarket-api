@@ -40,6 +40,16 @@ paths:
   /bookings:
     get:
       summary: List Bookings
+      operationId: get-bookings
+      description: 'Return lists of bookings accessible to the user, optionally scopable to the providing lab account. The application scope must include ''read_bookings''.'
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: provider_account
+          description: The parent lab account ID.
+      tags:
+        - bookings
       responses:
         '200':
           description: OK
@@ -68,23 +78,7 @@ paths:
                   required:
                     - id
                     - equipment_id
-              examples:
-                example-1:
-                  value:
-                    - id: 1
-                      equipment_id: 100
-        '403':
-          description: Forbidden
-      operationId: get-bookings
-      description: 'Return lists of bookings accessible to the user, optionally scopable to the providing lab account. The application scope must include ''read_bookings''.'
-      parameters:
-        - schema:
-            type: number
-          in: query
-          name: provider_account
-          description: The parent lab account ID.
-      tags:
-        - bookings
+              examples: {}
     parameters: []
   '/bookings/{id}':
     get:
@@ -99,8 +93,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Booking'
               examples: {}
+        '400':
+          description: Bad Request
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
       operationId: 'get-bookings-:id'
       description: Return the details about a particular booking as defined by the database identifier. The application scope must include `read_bookings`.
     parameters:
@@ -166,8 +166,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Equipment'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
         '403':
           description: Forbidden
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
       operationId: 'get-equipment-:id'
       description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
       tags:
@@ -199,6 +205,12 @@ paths:
                       type: integer
                     name:
                       type: string
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
       operationId: get-accounts
       description: Lists all accounts accessilbe through the integration.
   '/accounts/{id}':
@@ -220,6 +232,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
       operationId: 'get-accounts-:id'
       description: Get the full details of a specific account.
 components:
@@ -501,7 +521,53 @@ components:
             read_equipment: Read Access to Equipment
             read_bookings: Read Access to Bookings
       description: ''
-  responses: {}
+  responses:
+    500-Internal-Server-Error:
+      description: Internal server error. Retry your request. Use an exponential backoff or our servers may blacklist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              error_description:
+                type: string
+    404-Not-Found:
+      description: Requested resource not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              error_description:
+                type: string
+    403-Forbidden:
+      description: Forbidden. You are either unauthorised to perform the requested operation or your application is unapproved.
+      content:
+        application/json:
+          schema:
+            type: object
+      headers: {}
+    401-Unauthorised:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              error_description:
+                type: string
+    400-Bad-Request:
+      description: Malformed request. Missing required parameters.
+      content:
+        application/json:
+          schema:
+            type: object
 security:
   - API Key:
       - read_equipment
