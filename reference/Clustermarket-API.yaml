@@ -470,7 +470,7 @@ components:
       description: ''
   responses:
     500-Internal-Server-Error:
-      description: Internal server error. Retry your request. Use an exponential backoff or our servers may blacklist
+      description: Internal server error. Retry your request. Use an exponential backoff or our servers may temporary block your client.
       content:
         application/json:
           schema:
@@ -499,7 +499,7 @@ components:
             type: object
       headers: {}
     401-Unauthorised:
-      description: Example response
+      description: Unauthorised.
       content:
         application/json:
           schema:
@@ -516,7 +516,7 @@ components:
           schema:
             type: object
     200-Booking-List:
-      description: OK
+      description: Booking List
       content:
         application/json:
           schema:
@@ -544,14 +544,14 @@ components:
                 - equipment_id
           examples: {}
     200-Booking:
-      description: OK
+      description: Booking Details
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Booking'
           examples: {}
     200-Equipment-List:
-      description: OK
+      description: Equipment List
       content:
         application/json:
           schema:
@@ -580,13 +580,13 @@ components:
                 - id: 1
                   name: NMR
     200-Equipment:
-      description: OK
+      description: Equipment Details
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Equipment'
     200-Account-List:
-      description: OK
+      description: Account List
       content:
         application/json:
           schema:
