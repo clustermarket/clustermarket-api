@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Clustermarket API
-  version: 0.1.1
+  version: 0.1.2
   description: |-
     # Important Concepts
 
@@ -52,33 +52,15 @@ paths:
         - bookings
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                description: ''
-                minItems: 1
-                uniqueItems: false
-                x-examples:
-                  example-1:
-                    - id: 6373
-                      asset_id: 7568
-                    - id: 6374
-                      asset_id: 7569
-                    - id: 6375
-                      asset_id: 7570
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    equipment_id:
-                      type: integer
-                  required:
-                    - id
-                    - equipment_id
-              examples: {}
+          $ref: '#/components/responses/200-Booking-List'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
     parameters: []
   '/bookings/{id}':
     get:
@@ -87,20 +69,17 @@ paths:
         - bookings
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Booking'
-              examples: {}
+          $ref: '#/components/responses/200-Booking'
         '400':
-          description: Bad Request
+          $ref: '#/components/responses/400-Bad-Request'
         '401':
           $ref: '#/components/responses/401-Unauthorised'
         '403':
           $ref: '#/components/responses/403-Forbidden'
         '404':
           $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-booking
       description: Return the details about a particular booking as defined by the database identifier. The application scope must include `read_bookings`.
     parameters:
@@ -117,36 +96,17 @@ paths:
         - equipment
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                description: ''
-                minItems: 1
-                uniqueItems: false
-                x-examples:
-                  example-1:
-                    - id: 7576
-                      name: Subatomic NMR Spectrometer
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                      minLength: 1
-                  required:
-                    - id
-                    - name
-              examples:
-                example-1:
-                  value:
-                    - id: 1
-                      name: NMR
+          $ref: '#/components/responses/200-Equipment-List'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
         '403':
           description: Forbidden
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: list-equipment
       description: Lists all equipment under the specified lab.
       parameters:
@@ -161,11 +121,7 @@ paths:
       summary: Equipment Details
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Equipment'
+          $ref: '#/components/responses/200-Equipment'
         '400':
           $ref: '#/components/responses/400-Bad-Request'
         '401':
@@ -174,6 +130,8 @@ paths:
           description: Forbidden
         '404':
           $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-equipment
       description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
       tags:
@@ -193,24 +151,15 @@ paths:
         - accounts
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
+          $ref: '#/components/responses/200-Account-List'
         '400':
           $ref: '#/components/responses/400-Bad-Request'
         '401':
           $ref: '#/components/responses/401-Unauthorised'
         '403':
           $ref: '#/components/responses/403-Forbidden'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: list-accounts
       description: Lists all accounts accessilbe through the integration.
   '/accounts/{id}':
@@ -227,11 +176,7 @@ paths:
         - accounts
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Account'
+          $ref: '#/components/responses/200-Account'
         '400':
           $ref: '#/components/responses/400-Bad-Request'
         '401':
@@ -240,6 +185,8 @@ paths:
           $ref: '#/components/responses/403-Forbidden'
         '404':
           $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-account
       description: Get the full details of a specific account.
 components:
@@ -568,6 +515,95 @@ components:
         application/json:
           schema:
             type: object
+    200-Booking-List:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            description: ''
+            minItems: 1
+            uniqueItems: false
+            x-examples:
+              example-1:
+                - id: 6373
+                  asset_id: 7568
+                - id: 6374
+                  asset_id: 7569
+                - id: 6375
+                  asset_id: 7570
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                equipment_id:
+                  type: integer
+              required:
+                - id
+                - equipment_id
+          examples: {}
+    200-Booking:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Booking'
+          examples: {}
+    200-Equipment-List:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            description: ''
+            minItems: 1
+            uniqueItems: false
+            x-examples:
+              example-1:
+                - id: 7576
+                  name: Subatomic NMR Spectrometer
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                  minLength: 1
+              required:
+                - id
+                - name
+          examples:
+            example-1:
+              value:
+                - id: 1
+                  name: NMR
+    200-Equipment:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Equipment'
+    200-Account-List:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+    200-Account:
+      description: Account Details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
 security:
   - API Key:
       - read_equipment
