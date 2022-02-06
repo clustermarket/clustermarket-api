@@ -84,7 +84,7 @@ paths:
       description: Return the details about a particular booking as defined by the database identifier. The application scope must include `read_bookings`.
     parameters:
       - schema:
-          type: number
+          type: integer
         name: id
         in: path
         required: true
@@ -138,7 +138,7 @@ paths:
         - equipment
     parameters:
       - schema:
-          type: number
+          type: integer
         name: id
         in: path
         required: true
@@ -165,7 +165,7 @@ paths:
   '/accounts/{id}':
     parameters:
       - schema:
-          type: number
+          type: integer
         name: id
         in: path
         required: true
