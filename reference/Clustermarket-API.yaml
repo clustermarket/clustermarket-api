@@ -40,7 +40,7 @@ paths:
   /bookings:
     get:
       summary: List Bookings
-      operationId: get-bookings
+      operationId: list-bookings
       description: 'Return lists of bookings accessible to the user, optionally scopable to the providing lab account. The application scope must include ''read_bookings''.'
       parameters:
         - schema:
@@ -101,7 +101,7 @@ paths:
           $ref: '#/components/responses/403-Forbidden'
         '404':
           $ref: '#/components/responses/404-Not-Found'
-      operationId: 'get-bookings-:id'
+      operationId: get-booking
       description: Return the details about a particular booking as defined by the database identifier. The application scope must include `read_bookings`.
     parameters:
       - schema:
@@ -147,7 +147,7 @@ paths:
                       name: NMR
         '403':
           description: Forbidden
-      operationId: get-equipment
+      operationId: list-equipment
       description: Lists all equipment under the specified lab.
       parameters:
         - schema:
@@ -174,7 +174,7 @@ paths:
           description: Forbidden
         '404':
           $ref: '#/components/responses/404-Not-Found'
-      operationId: 'get-equipment-:id'
+      operationId: get-equipment
       description: 'Returns details about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
       tags:
         - equipment
@@ -211,7 +211,7 @@ paths:
           $ref: '#/components/responses/401-Unauthorised'
         '403':
           $ref: '#/components/responses/403-Forbidden'
-      operationId: get-accounts
+      operationId: list-accounts
       description: Lists all accounts accessilbe through the integration.
   '/accounts/{id}':
     parameters:
@@ -240,7 +240,7 @@ paths:
           $ref: '#/components/responses/403-Forbidden'
         '404':
           $ref: '#/components/responses/404-Not-Found'
-      operationId: 'get-accounts-:id'
+      operationId: get-account
       description: Get the full details of a specific account.
 components:
   schemas:
