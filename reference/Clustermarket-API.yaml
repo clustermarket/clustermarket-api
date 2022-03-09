@@ -731,7 +731,7 @@ components:
           schema:
             $ref: '#/components/schemas/Account'
     200-Equipment-Bookings-List:
-      description: Example response
+      description: Equipment Bookings
       content:
         application/json:
           schema:
@@ -758,7 +758,7 @@ components:
                   end_time: '2022-03-08T11:00:00.000+00:00'
                   status: Requested
     200-Equipment-Pin-Codes-List:
-      description: Example response
+      description: Equipment Pin Codes
       content:
         application/json:
           schema:
@@ -779,7 +779,7 @@ components:
                   name: Chara Berge
                   pin_code: $2a$04$wDgsE9ra758KD7hI16zLbeEyleHVHgfeufoznjahz94mY4xXECmqC
     200-User-Pin-Code:
-      description: Example response
+      description: User pin code
       content:
         application/json:
           schema:
@@ -798,7 +798,7 @@ components:
                 name: Christy White
                 pin_code: $2a$04$1eqY5zWj21QHgEqigtx1euKRCWTYbVI3eCI7dMq88OBZn4cASEjLm
     200-User-Pin-Code-Created:
-      description: Example response
+      description: User pin code created
       content:
         application/json:
           schema:
@@ -807,7 +807,7 @@ components:
             example-1:
               value: Pin code created successfully.
     422-User-Pin-Code-Not-Created:
-      description: Example response
+      description: User pin code not created. Response may vary depending on cause.
       content:
         application/json:
           schema:
