@@ -825,3 +825,4 @@ tags:
   - name: accounts
   - name: bookings
   - name: equipment
+  - name: user
