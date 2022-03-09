@@ -189,6 +189,125 @@ paths:
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-account
       description: Get the full details of a specific account.
+  '/equipment/{id}/bookings':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Equipment Bookings
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-Equipment-Bookings-List'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
+      operationId: get-equipment-id-bookings
+      description: 'Returns bookings about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
+  '/equipment/{id}/pin_codes':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Equipment Pin Codes
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-Equipment-Pin-Codes-List'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
+      operationId: get-equipment-id-pin_codes
+      description: 'Returns pin codes related to users who have access to a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
+  '/users/{id}/pin_code':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-User-Pin-Code'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
+      operationId: get-users-id-pin_codes
+      description: Return the pin code and name of a specific user. The application scope must include `read_users`.
+    patch:
+      summary: ''
+      operationId: patch-users-id-pin_code
+      responses:
+        '200':
+          $ref: '#/components/responses/200-User-Pin-Code-Created'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
+        '422':
+          $ref: '#/components/responses/422-User-Pin-Code-Not-Created'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
+      description: Create a new pin code for an user. The application scope must include `read_users`.
+  '/equipment/{id}/schedule':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-Equipment-Bookings-List'
+        '400':
+          $ref: '#/components/responses/400-Bad-Request'
+        '401':
+          $ref: '#/components/responses/401-Unauthorised'
+        '403':
+          $ref: '#/components/responses/403-Forbidden'
+        '404':
+          $ref: '#/components/responses/404-Not-Found'
+        '500':
+          $ref: '#/components/responses/500-Internal-Server-Error'
+      operationId: get-equipment-id-schedule
+      description: 'Returns bookings about a particular piece of equipment for the next 7 days. Requires the equipment ID, and the application scope must include `read_equipment`.'
 components:
   schemas:
     Account:
@@ -585,6 +704,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Equipment'
+          examples: {}
     200-Account-List:
       description: Account List
       content:
@@ -604,6 +724,93 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Account'
+    200-Equipment-Bookings-List:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                asset_id:
+                  type: integer
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                status:
+                  type: string
+          examples:
+            example-1:
+              value:
+                - id: 1
+                  asset_id: 1
+                  start_time: '2022-03-08T09:00:00.000+00:00'
+                  end_time: '2022-03-08T11:00:00.000+00:00'
+                  status: Requested
+    200-Equipment-Pin-Codes-List:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                pin_code:
+                  type: string
+          examples:
+            example-1:
+              value:
+                - id: 1
+                  name: Chara Berge
+                  pin_code: $2a$04$wDgsE9ra758KD7hI16zLbeEyleHVHgfeufoznjahz94mY4xXECmqC
+    200-User-Pin-Code:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              pin_code:
+                type: string
+          examples:
+            example-1:
+              value:
+                id: 1
+                name: Christy White
+                pin_code: $2a$04$1eqY5zWj21QHgEqigtx1euKRCWTYbVI3eCI7dMq88OBZn4cASEjLm
+    200-User-Pin-Code-Created:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: string
+          examples:
+            example-1:
+              value: Pin code created successfully.
+    422-User-Pin-Code-Not-Created:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: string
+          examples:
+            example-1:
+              value: User already has a pin code!
+            example-2:
+              value: There was a problem saving the pin code.
 security:
   - API Key:
       - read_equipment
