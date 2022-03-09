@@ -198,7 +198,8 @@ paths:
         required: true
     get:
       summary: Equipment Bookings
-      tags: []
+      tags:
+        - equipment
       responses:
         '200':
           $ref: '#/components/responses/200-Equipment-Bookings-List'
@@ -223,7 +224,8 @@ paths:
         required: true
     get:
       summary: Equipment Pin Codes
-      tags: []
+      tags:
+        - equipment
       responses:
         '200':
           $ref: '#/components/responses/200-Equipment-Pin-Codes-List'
@@ -239,7 +241,7 @@ paths:
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-equipment-id-pin_codes
       description: 'Returns pin codes related to users who have access to a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
-  '/users/{id}/pin_code':
+  '/user/{id}/pin_code':
     parameters:
       - schema:
           type: string
@@ -247,8 +249,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: User Pin Code
       responses:
         '200':
           $ref: '#/components/responses/200-User-Pin-Code'
@@ -264,8 +265,10 @@ paths:
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-users-id-pin_codes
       description: Return the pin code and name of a specific user. The application scope must include `read_users`.
+      tags:
+        - user
     patch:
-      summary: ''
+      summary: User Patch Pin Code
       operationId: patch-users-id-pin_code
       responses:
         '200':
@@ -283,6 +286,8 @@ paths:
         '500':
           $ref: '#/components/responses/500-Internal-Server-Error'
       description: Create a new pin code for an user. The application scope must include `read_users`.
+      tags:
+        - user
   '/equipment/{id}/schedule':
     parameters:
       - schema:
@@ -291,8 +296,9 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: Equipment Schedule
+      tags:
+        - equipment
       responses:
         '200':
           $ref: '#/components/responses/200-Equipment-Bookings-List'
