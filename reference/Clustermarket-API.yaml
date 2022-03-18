@@ -236,6 +236,7 @@ paths:
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-equipment-id-schedule
       description: 'Returns bookings about a particular piece of equipment for the next 7 days. Requires the equipment ID, and the application scope must include `read_equipment`.'
+      x-internal: true
   /accounts:
     parameters: []
     get:
@@ -293,27 +294,6 @@ paths:
         name: id
         in: path
         required: true
-    get:
-      summary: User Pin Code
-      responses:
-        '200':
-          $ref: '#/components/responses/200-User-Pin-Code'
-        '400':
-          $ref: '#/components/responses/400-Bad-Request'
-        '401':
-          $ref: '#/components/responses/401-Unauthorised'
-        '403':
-          $ref: '#/components/responses/403-Forbidden'
-        '404':
-          $ref: '#/components/responses/404-Not-Found'
-        '500':
-          $ref: '#/components/responses/500-Internal-Server-Error'
-      operationId: get-users-id-pin_codes
-      description: Return the pin code and name of a specific user. The application scope must include `read_users`.
-      tags:
-        - user
-        - desktop
-      x-internal: true
     patch:
       summary: User Patch Pin Code
       operationId: patch-users-id-pin_code
@@ -335,6 +315,7 @@ paths:
       description: Create a new pin code for an user. The application scope must include `read_users`.
       tags:
         - user
+      x-internal: true
 components:
   schemas:
     Account:
