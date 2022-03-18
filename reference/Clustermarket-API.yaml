@@ -191,7 +191,6 @@ paths:
     get:
       summary: Equipment Pin Codes
       tags:
-        - equipment
         - desktop
       responses:
         '200':
@@ -219,7 +218,6 @@ paths:
     get:
       summary: Equipment Schedule
       tags:
-        - equipment
         - desktop
       responses:
         '200':
@@ -314,7 +312,7 @@ paths:
           $ref: '#/components/responses/500-Internal-Server-Error'
       description: Create a new pin code for an user. The application scope must include `read_users`.
       tags:
-        - user
+        - desktop
       x-internal: true
 components:
   schemas:
