@@ -666,19 +666,31 @@ components:
               properties:
                 id:
                   type: integer
+                  readOnly: true
                 equipment_id:
                   type: integer
+                  readOnly: true
                 start_time:
                   type: string
+                  readOnly: true
                 end_time:
                   type: string
+                  readOnly: true
                 status:
                   type: string
+                  readOnly: true
                 booking_type:
                   type: string
+                  enum:
+                    - internal
+                    - external
+                    - maintenance
+                  readOnly: true
               required:
                 - id
                 - equipment_id
+              readOnly: true
+            readOnly: true
           examples: {}
     200-Booking:
       description: Booking Details
