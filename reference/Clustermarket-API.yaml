@@ -392,6 +392,7 @@ components:
         add_ons:
           type: string
           minLength: 1
+          readOnly: true
         requester_organisation:
           type: object
           required:
@@ -433,6 +434,7 @@ components:
         status:
           type: string
           minLength: 1
+          readOnly: true
         duration:
           type: number
         equipment:
@@ -449,6 +451,7 @@ components:
         cost:
           type: string
           minLength: 1
+          readOnly: true
         requester_lab:
           type: object
           required:
@@ -479,12 +482,18 @@ components:
             name:
               type: string
               minLength: 1
+              readOnly: true
         requested_at:
           type: string
           minLength: 1
+          readOnly: true
         booking_type:
           type: string
-          minLength: 1
+          enum:
+            - internal
+            - external
+            - maintenance
+          readOnly: true
       required:
         - id
         - requester_organisation
@@ -497,7 +506,6 @@ components:
         - requester_lab
         - provider_lab
         - requested_at
-        - booking_type
     Equipment:
       description: Represent an asset under the control of a lab
       type: object
@@ -660,6 +668,14 @@ components:
                   type: integer
                 equipment_id:
                   type: integer
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                status:
+                  type: string
+                booking_type:
+                  type: string
               required:
                 - id
                 - equipment_id
