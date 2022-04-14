@@ -626,6 +626,11 @@ components:
         application/json:
           schema:
             type: object
+            properties:
+              error:
+                type: string
+              error_description:
+                type: string
       headers: {}
     401-Unauthorised:
       description: Unauthorised.
