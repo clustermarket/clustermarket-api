@@ -28,7 +28,7 @@ info:
   contact:
     name: Support
     email: support@clustermarket.com
-    url: https://www.clustermarket.com/support
+    url: 'https://www.clustermarket.com/support'
   license:
     name: Proprietary
     url: 'https://www.clustermarket.com/terms'
@@ -160,7 +160,7 @@ paths:
     parameters:
       - schema:
           type: integer
-        description: 'Unique ID of the equipment'
+        description: Unique ID of the equipment
         name: id
         in: path
         required: true
@@ -187,7 +187,7 @@ paths:
     parameters:
       - schema:
           type: integer
-        description: 'Unique ID of the equipment'
+        description: Unique ID of the equipment
         name: id
         in: path
         required: true
@@ -215,7 +215,7 @@ paths:
     parameters:
       - schema:
           type: integer
-        description: 'Unique ID of the equipment'
+        description: Unique ID of the equipment
         name: id
         in: path
         required: true
@@ -293,7 +293,7 @@ paths:
     parameters:
       - schema:
           type: integer
-        description: 'Unique ID of the user'
+        description: Unique ID of the user
         name: id
         in: path
         required: true
@@ -766,7 +766,18 @@ components:
             example-1:
               value:
                 - id: 1
-                  name: NMR
+                  name: William Optics RedCat 71 APO
+                  description: Apochromatic telescope
+                  room: Room 101
+                  availability_status: Available
+                  model: RedCat 71
+                  manufacturer: William Optics
+                  sub_category:
+                    id: 1
+                    name: Audiovisual & IT
+                  contact_person:
+                    id: 1
+                    name: Lisa Millar
     200-Equipment:
       description: Equipment Details
       content:
@@ -882,7 +893,7 @@ components:
               value: There was a problem saving the pin code.
 tags:
   - name: accounts
-    description: Accounts represent Organisations, Departments or Labs
+    description: 'Accounts represent Organisations, Departments or Labs'
   - name: bookings
     description: A booking made on an equipment.
   - name: equipment
