@@ -358,6 +358,20 @@ components:
         timezone:
           type: string
           example: Europe/London
+        labs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        departments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
       required:
         - id
         - account_type
