@@ -362,16 +362,22 @@ components:
           type: array
           items:
             type: object
+            nullable: true
             properties:
               id:
                 type: integer
+              name:
+                type: string
         departments:
           type: array
           items:
             type: object
+            nullable: true
             properties:
               id:
                 type: integer
+              name:
+                type: string
       required:
         - id
         - account_type
