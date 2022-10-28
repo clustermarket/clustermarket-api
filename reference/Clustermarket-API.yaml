@@ -623,7 +623,7 @@ components:
           scopes:
             read_equipment: Read Access to equipment data.
             read_bookings: Read Access to booking data.
-            read_accounts: Read Access to account information
+            read_accounts: Read Access to account information.
   responses:
     500-Internal-Server-Error:
       description: Internal server error. Retry your request. Use an exponential backoff or our servers may temporary block your client.
