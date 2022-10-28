@@ -615,19 +615,15 @@ components:
       type: oauth2
       flows:
         password:
-          scopes:
-            read_equipment: Read Access to equipment data.
-            read_bookings: Read Access to booking data.
-            read_accounts: Read Access to Account information
-          refreshUrl: /oauth/token
-          tokenUrl: /oauth/token
+          scopes: {}
         authorizationCode:
           authorizationUrl: /oauth/authorize
           tokenUrl: /oauth/token
           refreshUrl: /oauth/token
           scopes:
-            read_equipment: Read Access to Equipment
-            read_bookings: Read Access to Bookings
+            read_equipment: Read Access to equipment data.
+            read_bookings: Read Access to booking data.
+            read_accounts: Read Access to account information
   responses:
     500-Internal-Server-Error:
       description: Internal server error. Retry your request. Use an exponential backoff or our servers may temporary block your client.
