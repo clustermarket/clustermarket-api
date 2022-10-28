@@ -183,6 +183,9 @@ paths:
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-equipment-id-bookings
       description: 'Returns bookings about a particular piece of equipment. Requires the equipment ID, and the application scope must include `read_equipment`.'
+      security:
+        - oauth:
+            - read_bookings
   '/equipment/{id}/pin_codes':
     parameters:
       - schema:
@@ -257,9 +260,10 @@ paths:
         '500':
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: list-accounts
-      description: Lists all accounts accessilbe through the integration.
+      description: Lists all accounts accessilbe through the integration. The application scope must include `read_accounts`.
       security:
-        - oauth: []
+        - oauth:
+            - read_accounts
   '/accounts/{id}':
     parameters:
       - schema:
@@ -286,9 +290,10 @@ paths:
         '500':
           $ref: '#/components/responses/500-Internal-Server-Error'
       operationId: get-account
-      description: Get the full details of a specific account.
+      description: Get the full details of a specific account. The application scope must include `read_accounts`.
       security:
-        - oauth: []
+        - oauth:
+            - read_accounts
   '/user/{id}/pin_code':
     parameters:
       - schema:
@@ -611,8 +616,9 @@ components:
       flows:
         password:
           scopes:
-            read_equipment: Read Access to Equipment
-            read_bookings: Read Access to Bookings
+            read_equipment: Read Access to equipment data.
+            read_bookings: Read Access to booking data.
+            read_accounts: Read Access to Account information
           refreshUrl: /oauth/token
           tokenUrl: /oauth/token
         authorizationCode:
