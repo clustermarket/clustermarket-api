@@ -15,6 +15,7 @@ info:
     ```mermaid
     graph TD
         org[Organisation]
+        org-->lab0[Lab]
         dep1[Department]
         dep2[Department]
         org-->dep1
