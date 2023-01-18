@@ -821,6 +821,18 @@ components:
                   type: integer
                 name:
                   type: string
+                account_type:
+                  type: string
+                  enum:
+                    - lab
+                    - department
+                    - organisation
+                '':
+                  type: string
+              required:
+                - id
+                - name
+                - account_type
     200-Account:
       description: Account Details
       content:
