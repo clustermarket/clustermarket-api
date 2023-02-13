@@ -602,6 +602,8 @@ components:
           type: string
           minLength: 1
           description: Equipment description
+        city:
+          type: string
       required:
         - id
         - name
