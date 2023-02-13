@@ -860,6 +860,8 @@ components:
                   type: string
                 status:
                   type: string
+                booking_type:
+                  type: string
           examples:
             example-1:
               value:
