@@ -829,8 +829,6 @@ components:
                     - lab
                     - department
                     - organisation
-                '':
-                  type: string
               required:
                 - id
                 - name
