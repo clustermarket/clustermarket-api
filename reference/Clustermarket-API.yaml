@@ -685,9 +685,7 @@ components:
         application/json:
           schema:
             type: array
-            description: ''
             minItems: 1
-            uniqueItems: false
             x-examples:
               example-1:
                 - id: 6373
@@ -721,6 +719,8 @@ components:
                     - external
                     - maintenance
                   readOnly: true
+                user_id:
+                  type: integer
               required:
                 - id
                 - equipment_id
