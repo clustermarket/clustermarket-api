@@ -576,8 +576,9 @@ components:
           type: string
           minLength: 1
           description: Equipment name
-        category:
+        room:
           type: string
+          minLength: 1
         manufacturer:
           type: string
           minLength: 1
@@ -586,15 +587,25 @@ components:
           type: string
           minLength: 1
           description: Equipment model name
-        charging_type:
+        city:
           type: string
-          minLength: 1
+        country:
+          type: string
         currency:
           type: string
           minLength: 1
-        room:
+        charging_type:
           type: string
           minLength: 1
+        description:
+          type: string
+          minLength: 1
+          description: Equipment description
+        category:
+          type: object
+          properties:
+            name:
+              type: string
         lab:
           type: object
           required:
@@ -608,21 +619,15 @@ components:
               type: string
               minLength: 1
               description: Laboratory name
-        description:
-          type: string
-          minLength: 1
-          description: Equipment description
-        city:
-          type: string
       required:
         - id
         - name
         - manufacturer
         - model
-        - charging_type
         - currency
-        - lab
+        - charging_type
         - description
+        - lab
   securitySchemes:
     oauth:
       type: oauth2
