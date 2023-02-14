@@ -335,6 +335,9 @@ components:
         id:
           type: integer
           readOnly: true
+        name:
+          type: string
+          example: Cambridge Graphene Center
         account_type:
           type: string
           enum:
@@ -348,13 +351,6 @@ components:
           enum:
             - academia
             - industry
-        department:
-          type: integer
-        organisation:
-          type: integer
-        name:
-          type: string
-          example: Cambridge Graphene Center
         description:
           type: string
         website:
@@ -364,6 +360,20 @@ components:
         timezone:
           type: string
           example: Europe/London
+        department:
+          type: object
+          properties:
+            name:
+              type: string
+            id:
+              type: integer
+        organisation:
+          type: object
+          properties:
+            name:
+              type: string
+            id:
+              type: integer
         labs:
           type: array
           items:
@@ -386,8 +396,8 @@ components:
                 type: string
       required:
         - id
-        - account_type
         - name
+        - account_type
     Address:
       title: Address
       type: object
@@ -721,6 +731,16 @@ components:
                   readOnly: true
                 user_id:
                   type: integer
+                asset:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                last_public_note:
+                  type: object
+                  properties:
+                    message:
+                      type: string
               required:
                 - id
                 - equipment_id
@@ -740,9 +760,7 @@ components:
         application/json:
           schema:
             type: array
-            description: ''
             minItems: 1
-            uniqueItems: false
             x-examples:
               example-1:
                 - id: 7576
@@ -755,9 +773,13 @@ components:
                 name:
                   type: string
                   minLength: 1
-                description:
+                model:
+                  type: string
+                manufacturer:
                   type: string
                 room:
+                  type: string
+                description:
                   type: string
                 availabity_status:
                   type: string
@@ -766,10 +788,6 @@ components:
                     - Always Available
                     - Unavailable
                     - Not Available On
-                model:
-                  type: string
-                manufacturer:
-                  type: string
                 sub_category:
                   type: object
                   properties:
