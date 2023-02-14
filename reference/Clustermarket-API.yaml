@@ -430,10 +430,74 @@ components:
       properties:
         id:
           type: integer
+        cost:
+          type: string
+          minLength: 1
+          readOnly: true
+        currency:
+          type: string
+        charging_type:
+          type: string
+        local_start_time:
+          type: string
+          minLength: 1
+          readOnly: true
+        local_end_time:
+          type: string
+          minLength: 1
+          readOnly: true
+        requested_at:
+          type: string
+          minLength: 1
+          readOnly: true
+        booking_type:
+          type: string
+          enum:
+            - internal
+            - external
+            - maintenance
+          readOnly: true
+        status:
+          type: string
+          minLength: 1
+          readOnly: true
+        duration:
+          type: number
+          description: Booking duration in minutes.
         add_ons:
           type: string
           minLength: 1
           readOnly: true
+        requester_group:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              readOnly: true
+        equipment:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              minLength: 1
+        requester_lab:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
         requester_organisation:
           type: object
           required:
@@ -446,7 +510,31 @@ components:
             name:
               type: string
               minLength: 1
+        provider_lab:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
         provider_organisation:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: Account ID
+            name:
+              type: string
+              minLength: 1
+        creator:
           type: object
           required:
             - id
@@ -472,81 +560,25 @@ components:
               type: string
               minLength: 1
               description: 'User''s full name '
-        status:
-          type: string
-          minLength: 1
-          readOnly: true
-        duration:
-          type: number
-        equipment:
-          type: object
-          required:
-            - id
-            - name
-          properties:
-            id:
-              type: integer
-            name:
+            email:
               type: string
-              minLength: 1
-        cost:
-          type: string
-          minLength: 1
-          readOnly: true
-        requester_lab:
-          type: object
-          required:
-            - id
-            - name
-          properties:
-            id:
-              type: integer
-              description: Account ID
-            name:
+            sector:
               type: string
-              minLength: 1
-        provider_lab:
-          type: object
-          required:
-            - id
-            - name
-          properties:
-            id:
-              type: integer
-              description: Account ID
-            name:
-              type: string
-              minLength: 1
-        requester_group:
-          type: object
-          properties:
-            name:
-              type: string
-              minLength: 1
-              readOnly: true
-        requested_at:
-          type: string
-          minLength: 1
-          readOnly: true
-        booking_type:
-          type: string
-          enum:
-            - internal
-            - external
-            - maintenance
-          readOnly: true
       required:
         - id
-        - requester_organisation
-        - provider_organisation
-        - requester
+        - cost
+        - local_start_time
+        - local_end_time
+        - requested_at
         - status
         - duration
         - equipment
-        - cost
         - requester_lab
+        - requester_organisation
         - provider_lab
-        - requested_at
+        - provider_organisation
+        - creator
+        - requester
     Equipment:
       description: Represent an asset under the control of a lab
       type: object
