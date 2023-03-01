@@ -810,7 +810,7 @@ components:
                 name:
                   type: string
                   minLength: 1
-                model:
+                model_number:
                   type: string
                 manufacturer:
                   type: string
